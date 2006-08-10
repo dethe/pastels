@@ -1,0 +1,41 @@
+String Demo
+
+Just an idea I had, to create a semi-random line (small) composed of line
+segments, possibly overlapping.  Then randomly move it and rotate it around
+the screen, changing color slowly.  The string should be rotated to match the
+direction it is moving in, and direction should change in smallish increments
+to avoid jerking.
+
+Constrain the "string" to fit into a 20x20 square [say], and allow it to move
+that far offscreen before bouncing back.  Oh yeah, it bounces.  It doesn't
+move randomly, or not much, it moves in straight lines and bounces off the
+(offscreen) walls.  It does turn to match direction, but it does so offscreen,
+so no worries about jerkiness.  Me like.
+
+I just thought it would look cool.
+
+Code I need:
+
+* Create a window [Done]
+* size window to screen (fullscreen?)
+* Get screen coordinates, add enough to fit offscreen. (see rotfl.ui) [Maybe
+  not?]
+* Timing loop (see NSTimer) [Done]
+* Color cycling [Done]
+* Create the app [Done]
+* Draw a NSBezierPath [Done]
+* Rotate a NSBezierPath [Done]
+* Translate a NSBezierPath [Done]
+* NSBezierPath from points [Done]
+* ColorCycler as simple generator [Done]
+* Bounce around screen forever [Done]
+* Vary bounce angle, speed? [Done]
+* Start with random color [Done]
+* Start with random vector [Done]
+* Start with random rotation [Done]
+* Make vectors based on degrees, not simple integers [Nope]
+* Add curves to follow? [Nope]
+* Allow brush to move slightly off-screen [Done]
+* Allow brush (black lines) to be hidden [Done]
+* Make it a screen saver? [Done]
+* Fix bug where it gets stuck at the edge
