@@ -1,50 +1,59 @@
 '''
     Refactoring completed 2006-05-12
+    Another refactoring on 2006-08-31
 '''
 
 from random import randint
-from itertools import islice, cycle
+from itertools import cycle
 from AppKit import NSColor
 
 # Color Cycler, infinite iterator
 
-# define the ranges to work with
-_increasing = range(256)
-_decreasing = range(255, -1, -1)
+COLOR_BLOCK = 256
+DOUBLE_BLOCK = COLOR_BLOCK * 2
 
+# define the color ranges to work with
+increasing = [x / float(COLOR_BLOCK - 1) for x in range(COLOR_BLOCK)]
+decreasing = increasing[::-1]
 
-def _rgbaIntsToFloats(red, green, blue):
-    '''Our ranges are integers, but NSColor expects floats'''
-    return red / 255.0, green / 255.0, blue / 255.0, 1.0
+red = [0.0] * DOUBLE_BLOCK + increasing + [1.0] * DOUBLE_BLOCK + decreasing
+green = red[DOUBLE_BLOCK:] + red[:DOUBLE_BLOCK]
+blue = green[DOUBLE_BLOCK:] + green[:DOUBLE_BLOCK]
 
-def _nscolor(red, green, blue):
-    return NSColor.colorWithCalibratedRed_green_blue_alpha_(
-        *_rgbaIntsToFloats(red, green, blue))
+def nscolor(red, green, blue):
+    return NSColor.colorWithCalibratedRed_green_blue_alpha_(red, green, blue, 1.0)
         
-def _color_cycler():
-    '''Increase one color, then decrease the next, repeat'''
-    red, green, blue = 255, 0, 0
-    for green in _increasing:
-        yield _nscolor(red, green, blue)
-    for red in _decreasing:
-        yield _nscolor(red, green, blue)
-    for blue in _increasing:
-        yield _nscolor(red, green, blue)
-    for green in _decreasing:
-        yield _nscolor(red, green, blue)
-    for red in _increasing:
-        yield _nscolor(red, green, blue)
-    for blue in _decreasing:
-        yield _nscolor(red, green, blue)
+def color_generator(rgb=None):
+    '''Increase one color, then decrease the next, repeat
+       Generates 6 * 256 saturated colors'''
+    if not rgb:
+        rgb = zip(red, green, blue)
+    for r,g,b in rgb:
+        yield nscolor(r,g,b)
+        
+def random_color_generator():
+    rgb = zip(red, green, blue)
+    split = randint(0, len(rgb))
+    rand_rgb = rgb[split:] + rgb[:split]
+    return color_generator(rand_rgb)    
 
-def ColorCycler():
-    # start on random color (by discarding until it is reached) and cycle forever
-    return islice(cycle(_color_cycler()), randint(0, 256*6), None) 
+def color_cycler():
+    # generator which cycles forever
+    return cycle(color_generator())
+    
+def random_color_cycler():
+    return cycle(random_color_generator())
 
 def test():
-    cc = ColorCycler()
-    for i in range(20):
-        print cc.next()
+    cc = list(color_generator())
+    print 'length: %d (expected: %d)' % (len(cc), (256 * 6))
+    def d(fl): # float (0.0 -> 1.) to integer (0 - 255)
+        return int(fl * 255)
+    def c(co):
+        return '0x%02X%02X%02X' % (d(co.redComponent()), d(co.greenComponent()), d(co.blueComponent()))
+    for i in range(COLOR_BLOCK):
+        ix = [i + COLOR_BLOCK * m for m in range(6)]
+        print '\t'.join([c(cc[ii]) for ii in ix])
         
 if __name__ == '__main__':
     test()

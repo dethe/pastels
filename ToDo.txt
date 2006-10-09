@@ -38,4 +38,10 @@ Code I need:
 * Allow brush to move slightly off-screen [Done]
 * Allow brush (black lines) to be hidden [Done]
 * Make it a screen saver? [Done]
-* Fix bug where it gets stuck at the edge
+* Fix bug where it gets stuck at the edge [Done]
+* Reduce UI code?
+* Improve sliders
+* Capture Vector in a class
+* Preference option to set vector, rotation in place, rotation on origin, speed, randomness, framerate
+* Turn minsaver into a brush
+` 

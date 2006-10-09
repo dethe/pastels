@@ -1,16 +1,29 @@
-from gui_widgets import Window
 from PastelsView import PastelsView
 from PyObjCTools import AppHelper
-from AppKit import NSObject, NSApplication, NSTimer, NSApp
+from AppKit import *
 
 width, height = 640, 480
+
+def Window(title, width, height, view=None):
+    window = NSWindow.alloc().initWithContentRect_styleMask_backing_defer_(
+        ((0,0),(width,height)),
+        NSTitledWindowMask |
+        NSClosableWindowMask | 
+        NSMiniaturizableWindowMask |
+        NSResizableWindowMask,
+        NSBackingStoreBuffered,
+        False)
+    window.setTitle_(title)
+    if view:
+        window.setContentView_(view)
+    window.orderFront_(window)
+    return window
 
 class MyAppDelegate(NSObject):
 
     def applicationDidFinishLaunching_(self, notification):
         rect = ((0,0),(width, height))
         self.pastels_view = PastelsView.alloc().initWithFrame_isPreview_(rect, False)
-        self.pastels_view.debugging = True
         self.window = Window('Pastels Test', width, height, self.pastels_view)
         self.window_delegate = MyWindowDelegate.alloc().init()
         self.window.setDelegate_(self.window_delegate)
