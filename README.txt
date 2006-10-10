@@ -1,0 +1,1 @@
+Pastels is an example screensaver for OS X to demonstrate how to create a Cocoa screensaver in Python.  It demonstrates setting preferences, having a configuration window, and conditionally *not* exiting the screensaver when a key is pressed.

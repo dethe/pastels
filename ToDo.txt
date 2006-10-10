@@ -39,9 +39,9 @@ Code I need:
 * Allow brush (black lines) to be hidden [Done]
 * Make it a screen saver? [Done]
 * Fix bug where it gets stuck at the edge [Done]
-* Reduce UI code?
+* Reduce UI code? [Done]
 * Improve sliders
-* Capture Vector in a class
+* Capture Vector in a class [Cancel, switched to using NSAffineTransform instead]
 * Preference option to set vector, rotation in place, rotation on origin, speed, randomness, framerate
-* Turn minsaver into a brush
+* Turn minsaver into a brush [Done]
 ` 
