@@ -78,7 +78,7 @@ class PastelsPreferencesWindow(NSWindow):
             NSBackingStoreBuffered,
             False)
         self.setReleasedWhenClosed_(False)
-        width, height, segments, showBrush = pastelsPreferences()
+        width, height, segments = pastelsPreferences()
         c = self.contentView()
         c.addSubview_(Label(u'Brush Width:', (17,114)))
         c.addSubview_(Label(u'Brush Height:', (17,82)))
@@ -89,6 +89,9 @@ class PastelsPreferencesWindow(NSWindow):
         c.addSubview_(Button(u'Cancel', self, (138,2)))
         c.addSubview_(Button(u'OK', self, (220,2)))
         return self
+        
+    def canBecomeKeyWindow(self):
+        return True
 
     def fireOK_(self, button):
         c = self.contentView()
