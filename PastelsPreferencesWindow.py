@@ -55,6 +55,7 @@ def Button(title, window, position):
     return button
 
 def Window(title, width, height, view=None):
+    print 'window should not be called from here'
     window = NSWindow.alloc().initWithContentRect_styleMask_backing_defer_(
         ((0,0),(width,height)),
         NSTitledWindowMask |
@@ -74,7 +75,7 @@ class PastelsPreferencesWindow(NSWindow):
     def initWithFrame_(self, frame):
         self = super(PastelsPreferencesWindow, self).initWithContentRect_styleMask_backing_defer_(
             ((0,0),frame),
-            NSBorderlessWindowMask,
+            NSTitledWindowMask,
             NSBackingStoreBuffered,
             False)
         self.setReleasedWhenClosed_(False)
@@ -89,17 +90,16 @@ class PastelsPreferencesWindow(NSWindow):
         c.addSubview_(Button(u'Cancel', self, (138,2)))
         c.addSubview_(Button(u'OK', self, (220,2)))
         return self
-        
+
     def canBecomeKeyWindow(self):
         return True
-
+        
     def fireOK_(self, button):
         c = self.contentView()
         width = c.viewWithTag_(1).intValue()
         height = c.viewWithTag_(2).intValue()
         segments = c.viewWithTag_(3).intValue()
-        showBrush = c.viewWithTag_(4).state()
-        setPastelsPreferences(width, height, segments, showBrush)
+        setPastelsPreferences(width, height, segments)
         NSApp().endSheet_returnCode_(self, NSOKButton)
 
     def fireCancel_(self, button):
