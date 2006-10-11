@@ -4,8 +4,7 @@
     To build run 'python setup.py py2app' on the command line
 '''
 
-from distutils.core import setup
-import py2app
+from setuptools import setup
 
 plist = dict(
     NSPrincipalClass='PastelsView',
@@ -13,6 +12,7 @@ plist = dict(
 )
 
 setup(
+    setup_requires=['py2app'],
     plugin=['PastelsView.py'],
     options=dict(py2app=dict(
         extension='.saver',
