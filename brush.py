@@ -69,6 +69,8 @@ class Brush(NSBezierPath):
         self.speed = randint(1,7) # initial speed of movement
         initial_angle = randint(0, 359) # initial direction of movement
         self.rotation = randint(0,23) # initial degrees of rotation
+        self.rotation_offset_x = 50
+        self.rotation_offset_y = 50
         self.vector = vectorFromMagnitude_degrees_(self.speed, initial_angle)
         return self
         
@@ -102,8 +104,8 @@ class Brush(NSBezierPath):
     def rotate(self):
         x, y = self.position
         # note: offset x and y by some amount for spiraling or circling effects
-        x += 50
-        y += 50
+        x += self.rotation_offset_x
+        y += self.rotation_offset_y
         self.translateXBy_yBy_(-x,-y)
         self.rotateByDegrees_(self.rotation)
         self.translateXBy_yBy_(x,y)
@@ -128,10 +130,13 @@ class Brush(NSBezierPath):
             self.vector = vector_setMagnitude_(self.vector, 1.0)
 
     def add_randomness(self):
+        print 'add randomness'
         self.speed = self.speed + rnd() or 1
         self.rotation = (self.rotation + rnd()) * -1
         self.vector = vector_rotateByDegrees_(self.vector, rnd3())
         self.vector = vector_setMagnitude_(self.vector, self.speed)
+        self.rotation_offset_x += rnd()
+        self.rotation_offset_y += rnd() 
 
     def draw(self):
         self.color.next().set()
