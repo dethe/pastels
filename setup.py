@@ -20,7 +20,11 @@ setup(
         py2app=dict(
             extension=".saver",
             plist = dict(
-                CFBUNDLEShortVersionString = ' '.join([NAME, VERSION]),
+                CFBundleIdentifier = 'org.livingcode.plugins.pastels',
+                CFBundleShortVersionString = ' '.join([NAME, VERSION]),
+                CFBundleName = NAME,
+                NSHumanReadableCopyright = COPYRIGHT,
+                NSPrincipalClass = 'PastelsView',
             )
         )
     )
