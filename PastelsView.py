@@ -3,8 +3,9 @@ from Foundation import *
 from AppKit import NSColor, NSRectFill, NSCompositeSourceAtop
 from ScreenSaver import ScreenSaverView
 from PastelsPreferencesWindow import *
-from brush import Brush
+#from brush import Brush
 #from brush2 import TunnelBrush
+from brush3 import BouncingBrush
 
 class PastelsView(ScreenSaverView):
     
@@ -12,8 +13,9 @@ class PastelsView(ScreenSaverView):
         self = super(PastelsView, self).initWithFrame_isPreview_(frame, isPreview)
         self.registerDefaults()
         width, height, segments = pastelsPreferences()
-        self.brush = Brush.alloc().initWithSize_noSegments_inFrame_((width,height), segments, frame)
+        #self.brush = Brush.alloc().initWithSize_noSegments_inFrame_((width,height), segments, frame)
         #self.brush = TunnelBrush.alloc().initWithFrame_(frame)
+        self.brush = BouncingBrush.alloc().initWithFrame_(frame)
         self.setAnimationTimeInterval_(0.001)
         return self
             
