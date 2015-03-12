@@ -1,0 +1,1 @@
+This is example code showing how to create a screensaver on OS X using Python and the PyObjC bridge between Python and Cocoa. It includes a configuration window and a test harness for viewing the visualization from the command line and debugging.
